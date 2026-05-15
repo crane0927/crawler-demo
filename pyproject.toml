@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "crawler-demo"
+version = "0.1.0"
+description = "一个可持续扩展的 Python 爬虫项目骨架"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+  { name = "Codex" }
+]
+dependencies = []
+
+[project.scripts]
+crawler-demo = "crawler_demo.cli:main"
+github-project-crawler = "crawler_demo.cli:legacy_main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
