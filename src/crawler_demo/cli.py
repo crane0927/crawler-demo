@@ -19,7 +19,7 @@ def build_parser() -> argparse.ArgumentParser:
         choices=list_spider_names(),
         help="要执行的 spider 名称，例如 github_projects",
     )
-    run_parser.add_argument("--query", required=True, help="抓取关键字或查询条件")
+    run_parser.add_argument("--query", help="抓取关键字或查询条件，部分 spider 可不传")
     run_parser.add_argument("--limit", type=int, default=10, help="返回数据条数，默认 10")
     run_parser.add_argument(
         "--sort",

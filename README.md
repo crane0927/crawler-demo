@@ -63,6 +63,12 @@ crawler-demo list
 crawler-demo run github_projects --query "python crawler" --limit 5 --output output/github/repos.json
 ```
 
+抓取微博热点前 10：
+
+```bash
+crawler-demo run weibo_hot --limit 10 --output output/weibo/hot.json
+```
+
 也可以直接通过模块运行：
 
 ```bash
@@ -105,6 +111,17 @@ export GITHUB_TOKEN="你的 GitHub Token"
 - `pushed_at`
 - `topics`
 - `owner`
+
+### `weibo_hot`
+
+用于抓取微博热榜的实时热点，默认返回前 10 条，主要字段包括：
+
+- `title`
+- `rank`
+- `hot_value`
+- `label`
+- `topic_flag`
+- `url`
 
 ## 后续扩展示例
 
