@@ -8,6 +8,7 @@
 - 按 spider 维度拆分目录，便于后续扩展
 - 抽离公共异常、HTTP 请求和 spider 基类
 - 当前已内置 GitHub 项目抓取能力
+- 当前已内置通用整站抓取能力
 - 支持通过环境变量 `GITHUB_TOKEN` 提升 GitHub API 访问额度
 - 支持将结果保存为 JSON 文件
 
@@ -69,6 +70,17 @@ crawler-demo run github_projects --query "python crawler" --limit 5 --output out
 crawler-demo run weibo_hot --limit 10 --output output/weibo/hot.json
 ```
 
+抓取任意站点的同域页面与资源文件：
+
+```bash
+crawler-demo run site_mirror \
+  --start-url "http://www.qheze.com/" \
+  --max-pages 2000 \
+  --timeout 20 \
+  --resources-dir output/site_mirror/resources \
+  --output output/site_mirror/site.json
+```
+
 也可以直接通过模块运行：
 
 ```bash
@@ -123,6 +135,28 @@ export GITHUB_TOKEN="你的 GitHub Token"
 - `topic_flag`
 - `url`
 
+### `site_mirror`
+
+用于从任意 `http/https` 起始地址出发，尽量完整地抓取同域 HTML 页面与资源文件。默认能力包括：
+
+- 仅跟进同域页面链接
+- 自动跳过 `javascript:`、`mailto:` 等无效链接
+- 提取页面标题、关键词、描述、正文文本
+- 发现并下载图片、PDF、压缩包、Office 文档等资源
+- 输出站点级结构化 JSON，包含 `site`、`pages`、`resources`、`stats`
+
+常用参数：
+
+- `--start-url`：起始页面，默认 `http://www.qheze.com/`
+- `--max-pages`：最多抓取页面数，默认 `2000`
+- `--timeout`：单次请求超时秒数，默认 `20`
+- `--resources-dir`：资源文件保存目录
+- `--output`：结构化 JSON 输出文件路径
+
+### `qheze_site`
+
+保留的兼容别名，内部复用 `site_mirror` 实现，便于旧命令平滑迁移。
+
 ## 后续扩展示例
 
 如果后续要新增其他 spider，推荐按以下方式组织：
@@ -130,6 +164,10 @@ export GITHUB_TOKEN="你的 GitHub Token"
 ```text
 src/crawler_demo/spiders/
 ├── github_projects/
+│   └── spider.py
+├── site_mirror/
+│   └── spider.py
+├── qheze_site/
 │   └── spider.py
 ├── juejin_articles/
 │   └── spider.py

@@ -10,6 +10,5 @@ class BaseSpider(ABC):
     name: str
 
     @abstractmethod
-    def run(self, args: dict[str, Any]) -> list[dict[str, Any]]:
-        """执行抓取并返回标准化后的结果列表。"""
-
+    def run(self, args: dict[str, Any]) -> Any:
+        """执行抓取并返回可序列化的标准结果。"""
